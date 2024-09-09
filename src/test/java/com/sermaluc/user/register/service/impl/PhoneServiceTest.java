@@ -2,7 +2,9 @@ package com.sermaluc.user.register.service.impl;
 
 import com.sermaluc.user.register.model.dto.PhoneDTO;
 import com.sermaluc.user.register.model.entity.PhoneEntity;
+import com.sermaluc.user.register.model.entity.UserEntity;
 import com.sermaluc.user.register.repository.PhoneRepository;
+import com.sermaluc.user.register.repository.UserRepository;
 import com.sermaluc.user.register.service.PhoneService;
 import com.sermaluc.user.register.service.mapper.PhoneMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,6 +25,9 @@ class PhoneServiceTest {
 
     @Mock
     private PhoneRepository phoneRepository;
+
+    @Mock
+    private UserRepository userRepository;
 
     @InjectMocks
     private PhoneServiceImpl phoneService;
@@ -79,9 +84,15 @@ class PhoneServiceTest {
         phoneDTO.setCitycode("01");
         phoneDTO.setContrycode("52");
 
-        PhoneEntity phoneEntity = PhoneMapper.toEntity(phoneDTO);
-        phoneEntity.setUserId(1L);
+        UserEntity userEntity= new UserEntity();
+        userEntity.setId(1L);
+        userEntity.setEmail("test@example.com");
+        userEntity.setName("Test User");
 
+        PhoneEntity phoneEntity = PhoneMapper.toEntity(phoneDTO);
+        phoneEntity.setUser(userEntity);
+
+        when(userRepository.findById(1L)).thenReturn(Optional.of(userEntity));
         when(phoneRepository.save(any(PhoneEntity.class))).thenReturn(phoneEntity);
 
         PhoneDTO savedPhone = phoneService.save(phoneDTO, 1L);

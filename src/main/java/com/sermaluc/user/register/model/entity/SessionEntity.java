@@ -11,8 +11,8 @@ public class SessionEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "user_id", nullable = false, unique = true)
-    private Long userId;
+    @ManyToOne(fetch=FetchType.EAGER)
+    private UserEntity user;
 
     @Column(name = "token", nullable = false, unique = true)
     private String token;

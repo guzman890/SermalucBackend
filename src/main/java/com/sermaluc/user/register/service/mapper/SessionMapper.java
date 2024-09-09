@@ -11,7 +11,7 @@ public class SessionMapper {
 
         SessionDTO sessionDTO = new SessionDTO();
         sessionDTO.setId(session.getId());
-        sessionDTO.setUserId(session.getUserId());
+        sessionDTO.setUserId(session.getUser().getId());
         sessionDTO.setToken(session.getToken());
 
         return sessionDTO;
@@ -24,7 +24,6 @@ public class SessionMapper {
 
         SessionEntity sessionEntity = new SessionEntity();
         sessionEntity.setId(sessionDTO.getId());
-        sessionEntity.setUserId(sessionDTO.getUserId());
         sessionEntity.setToken(sessionDTO.getToken());
 
         return sessionEntity;

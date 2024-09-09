@@ -1,8 +1,11 @@
 package com.sermaluc.user.register.service.impl;
 
+import com.sermaluc.user.register.exception.UserNotFoundException;
 import com.sermaluc.user.register.model.dto.SessionDTO;
 import com.sermaluc.user.register.model.entity.SessionEntity;
+import com.sermaluc.user.register.model.entity.UserEntity;
 import com.sermaluc.user.register.repository.SessionRepository;
+import com.sermaluc.user.register.repository.UserRepository;
 import com.sermaluc.user.register.service.JwtService;
 import com.sermaluc.user.register.service.SessionService;
 import com.sermaluc.user.register.service.mapper.SessionMapper;
@@ -21,6 +24,9 @@ public class SessionServiceImpl implements SessionService {
     @Autowired
     private SessionRepository sessionRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @Override
     public List<SessionDTO> findAll() {
         return sessionRepository.findAll().stream()
@@ -37,6 +43,9 @@ public class SessionServiceImpl implements SessionService {
     @Override
     public SessionDTO save(SessionDTO sessionDTO) {
         SessionEntity sessionEntity = SessionMapper.toEntity(sessionDTO);
+        UserEntity currentUser = userRepository.findById(sessionDTO.getUserId())
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
+        sessionEntity.setUser(currentUser);
         return SessionMapper.toDTO(sessionRepository.save(sessionEntity));
     }
 

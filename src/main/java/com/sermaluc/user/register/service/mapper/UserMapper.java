@@ -1,7 +1,13 @@
 package com.sermaluc.user.register.service.mapper;
 
+import com.sermaluc.user.register.model.dto.PhoneDTO;
 import com.sermaluc.user.register.model.dto.UserDTO;
+import com.sermaluc.user.register.model.entity.PhoneEntity;
 import com.sermaluc.user.register.model.entity.UserEntity;
+
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class UserMapper {
     public static UserDTO toDTO(UserEntity user) {
@@ -17,6 +23,12 @@ public class UserMapper {
         userDTO.setCreated(user.getCreated());
         userDTO.setModified(user.getModified());
         userDTO.setStatus(user.getStatus());
+
+        if ( user.getPhones() != null)
+            userDTO.setPhones(user.getPhones().stream()
+                    .map(PhoneMapper::toDTO).
+                    collect(Collectors.toList())
+            );
         return userDTO;
     }
 

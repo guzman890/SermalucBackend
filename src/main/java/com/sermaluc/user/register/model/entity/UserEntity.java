@@ -3,6 +3,8 @@ package com.sermaluc.user.register.model.entity;
 import com.sermaluc.user.register.model.Status;
 import jakarta.persistence.*;
 import java.util.Date;
+import java.util.List;
+
 import lombok.Data;
 
 
@@ -28,6 +30,9 @@ public class UserEntity {
 
     @Column(name = "modified", nullable = false, unique = true)
     private Date modified;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER , cascade = CascadeType.ALL)
+    private List<PhoneEntity> phones;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
