@@ -1,6 +1,8 @@
 # User Registration API
 
-This project is a Spring Boot application for user registration, including user and phone management.
+This project is a Spring Boot application for user registration.
+
+![ER Diagram](ERDiagram.png)
 
 ## Prerequisites
 
@@ -13,8 +15,7 @@ This project is a Spring Boot application for user registration, including user 
 
 1. Clone the repository:
     ```sh
-    git clone https://github.com/yourusername/user-registration-api.git
-    cd user-registration-api
+    https://github.com/guzman890/SermalucBackend.git
     ```
 
 2. Build the project:
@@ -41,6 +42,23 @@ This project is a Spring Boot application for user registration, including user 
 - `GET /users` - Get all users
 - `GET /users/{id}` - Get user by ID
 
+## CURL Examples
+```
+curl --location 'http://localhost:8080/auth/register' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+   "name": "Juan Rodriguez",
+   "email": "juan@rodriguez.org",
+   "password": "hunter2",
+   "phones": [
+      {
+         "number": "1234567",
+         "citycode": "1",
+         "contrycode": "57"
+      }
+   ]
+}'
+```
 ## Database Schema
 
 The database schema is defined in the `backup.sql` file located in the `src/main/resources/migration.db` directory.
